@@ -57,11 +57,21 @@ def display_forecast():
     selected_model = st.selectbox("请选择模型", ["ARIMA", "LSTM", "ARIMA-LSTM", "GAMM"])
 
     if selected_model == "GAMM":
-        selected_year = st.selectbox("请选择年份", ["2020-2040"])
-        selected_SDI = st.slider("请选择SDI水平", 0.0, 1.0, 0.5)
-        selected_obese = st.slider("请选择肥胖率水平", 0.0, 1.0, 0.5)
+        selected_year = st.slider("请选择年份", 2020, 2040, 2020)
+        # 选择框：选择趋势
+        selected_sdi_trend = st.selectbox("请选择SDI", ["自然趋势", "自然趋势基础上上升", "自然趋势基础上下降"])
+        if selected_sdi_trend == "自然趋势基础上上升":
+            sdi_percentage = st.slider("请选择上升百分比", 0, 100, 10)
+        elif selected_sdi_trend == "自然趋势基础上下降":
+            sdi_percentage = st.slider("请选择下降百分比", 0, 100, 10)
+
+        selected_obese_trend = st.selectbox("请选择肥胖水平", ["自然趋势", "自然趋势基础上上升", "自然趋势基础上下降"])
+        if selected_obese_trend == "自然趋势基础上上升":
+            obese_percentage = st.slider("请选择上升百分比", 0, 100, 10, key="up_percentage")
+        elif selected_obese_trend == "自然趋势基础上下降":
+            obese_percentage = st.slider("请选择下降百分比", 0, 100, 10, key="down_percentage")
     else:
-        selected_year = st.selectbox("请选择年份", ["2020-2040"])
+        selected_year = st.slider("请选择年份", 2020, 2040, 2020)
 
     # 按钮：显示结果
     if st.button("显示结果"):
