@@ -1,21 +1,86 @@
 import streamlit as st
+import streamlit.components.v1 as components
+
+
 
 def main():
+    st.markdown("""
+                <style>
+                .stButton>button {
+                    background-color: #BEB8DC;
+                    border: none;
+                    color: white;
+                    padding: 20px 40px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 50px !important;
+                    margin: 0px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    width: 110%;
+                }
+                .stButton>button:hover {
+                    background-color: #E7EFFA;
+                    color: black;
+                }
+                .stButton>button:active {
+                    background-color: #E7EFFA; 
+                    color: black; 
+                }
+                .stButton>button:focus {
+                    color: black; 
+                }
+                .stButton>button:visited {
+                    color: black; 
+                }
+                </style>
+                """, unsafe_allow_html=True)
 
-    # 创建导航菜单
-    selected_page = st.sidebar.radio("选择一个板块", ("首页", "介绍", "现状", "趋势", "预测"))
+    col1, col2, col3, col4, col5 = st.columns(5)
 
-    # 根据所选板块显示不同内容
-    if selected_page == "首页":
+    with col1:
+        if st.button("首页", key="home"):
+            navigateTo("home")
+    with col2:
+        if st.button("介绍", key="introduction"):
+            navigateTo("introduction")
+    with col3:
+        if st.button("现状", key="current"):
+            navigateTo("current")
+    with col4:
+        if st.button("趋势", key="trends"):
+            navigateTo("trends")
+    with col5:
+        if st.button("预测", key="forecast"):
+            navigateTo("forecast")
+
+
+    selected_page = get_page_from_url()
+
+    # 根据选择的页面显示相应内容
+    if selected_page == "home":
         homepage()
-    elif selected_page == "介绍":
+    elif selected_page == "introduction":
         display_introduction()
-    elif selected_page == "现状":
+    elif selected_page == "current":
         display_current_status()
-    elif selected_page == "趋势":
+    elif selected_page == "trends":
         display_trends()
-    elif selected_page == "预测":
+    elif selected_page == "forecast":
         display_forecast()
+    else:
+        homepage()
+
+def navigateTo(page):
+    url = st.experimental_get_query_params()
+    url["page"] = page
+    st.experimental_set_query_params(**url)
+
+def get_page_from_url():
+    query_params = st.experimental_get_query_params()
+    return query_params.get('page', ['home'])[0]
+
 
 def homepage():
     st.title("""
@@ -81,4 +146,4 @@ def display_forecast():
             st.image("https://i.imgur.com/wg4Lz9K.png", caption="预测结果")
 
 if __name__ == "__main__":
-    main() 
+    main()
