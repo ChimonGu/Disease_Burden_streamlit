@@ -10,7 +10,7 @@ def main():
                     background-color: #BEB8DC;
                     border: none;
                     color: white;
-                    padding: 20px 40px;
+                    padding: 20px 20px;
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
@@ -34,8 +34,10 @@ def main():
                 .stButton>button:visited {
                     color: black; 
                 }
+                
                 </style>
                 """, unsafe_allow_html=True)
+
 
     col1, col2, col3, col4, col5 = st.columns(5)
 
@@ -138,12 +140,16 @@ def display_forecast():
     else:
         selected_year = st.slider("请选择年份", 2020, 2040, 2020)
 
-    # 按钮：显示结果
-    if st.button("显示结果"):
-        if selected_model == "GAMM":
-            st.image("https://i.imgur.com/1Y6T4xn.png", caption="预测结果")
-        else:
-            st.image("https://i.imgur.com/wg4Lz9K.png", caption="预测结果")
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    with col1:
+        # 按钮：显示结果
+        if st.button("显示结果", key="forecast_button"):
+            if selected_model == "GAMM":
+                st.image("https://i.imgur.com/1Y6T4xn.png", caption="预测结果")
+            else:
+                st.image("https://i.imgur.com/wg4Lz9K.png", caption="预测结果")
+
 
 if __name__ == "__main__":
     main()
