@@ -4,6 +4,9 @@ import streamlit.components.v1 as components
 st.set_page_config(layout="wide")
 
 def main():
+    logo_path = r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1200px-Xiamen_University_logo.svg.png?raw=true"
+    st.logo(logo_path, icon_image=logo_path)
+    st.sidebar.markdown("厦门大学公共卫生学院卫生与经济政策暨老年健康研究中心")
     st.markdown("""
                 <style>
                 .stButton>button {
