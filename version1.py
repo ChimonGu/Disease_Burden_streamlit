@@ -1,8 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(layout="wide")
-
 def main():
     st.markdown("""
                 <style>
@@ -14,7 +12,7 @@ def main():
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
-                    font-size: 50px !important;
+                    font-size: 100px !important;
                     margin: 0px;
                     cursor: pointer;
                     border-radius: 5px;
@@ -57,10 +55,8 @@ def main():
         if st.button("预测", key="forecast"):
             navigateTo("forecast")
 
-
     selected_page = get_page_from_url()
 
-    # 根据选择的页面显示相应内容
     if selected_page == "home":
         homepage()
     elif selected_page == "introduction":
@@ -103,14 +99,14 @@ def display_current_status():
     st.write("""
     在这个板块，我们将展示xx的现状。
     """)
-    st.image("https://i.imgur.com/QzFtzn9.png", caption="现状")
+    st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/91f77cc8a696e13b78355fd76718210.png?raw=true", caption="现状")
 
 def display_trends():
     st.title("趋势")
     st.write("""
     在这个板块，我们将展示xx的趋势。
     """)
-    st.image("https://i.imgur.com/ZYHGqL5.png", caption="趋势")
+    st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/0791c6a3d25f3519850edabccc2a7be.png?raw=true", caption="趋势")
 
 def display_forecast():
     st.title("预测")
@@ -145,9 +141,9 @@ def display_forecast():
     with col1:
         if st.button("显示结果", key="forecast_button"):
             if selected_model == "GAMM":
-                st.image("https://i.imgur.com/1Y6T4xn.png", caption="预测结果")
+                st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/62f0a24779a67cb4bc1bb214dbf75e5.png?raw=true", caption="预测结果")
             else:
-                st.image("https://i.imgur.com/wg4Lz9K.png", caption="预测结果")
+                st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/19b4c524216920ee9a9a1ac620a6b5c.png?raw=true", caption="预测结果")
 
 
 if __name__ == "__main__":
