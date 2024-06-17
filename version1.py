@@ -143,7 +143,6 @@ def display_forecast():
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        # 按钮：显示结果
         if st.button("显示结果", key="forecast_button"):
             if selected_model == "GAMM":
                 st.image("https://i.imgur.com/1Y6T4xn.png", caption="预测结果")
