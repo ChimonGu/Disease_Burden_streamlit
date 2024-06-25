@@ -1,0 +1,15 @@
+[global]
+disableWatchdogWarning = true
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"
+
+[deprecation]
+showPyplotGlobalUse = false
+
+[theme]
+base = "light"
+primaryColor = "#55436E"
+textColor = "black"
+
