@@ -280,7 +280,7 @@ def display_forecast():
         st.write("ARIMA-LSTM是一种结合了ARIMA和LSTM两种时间序列预测方法的技术。该模型利用ARIMA模型提取原始序列数据的线性特征，将ARIMA模型预测值与实际值之间的残差输入LSTM模型进行残差预测提取非线性特征。将线性部分和非线性部分结合起来，得到ARIMA-LSTM混合模型的预测结果")
         selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
 
-    tab1, tab2 = st.tabs(["📈 预测结果可视化", "🗃 显示预测数据"])
+    tab1, tab2 = st.tabs(["📈 预测结果可视化", "📅 显示预测数据"])
     tab1.subheader("预测结果可视化")
     tab2.subheader("预测数据")
 
