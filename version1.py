@@ -18,9 +18,18 @@ def change_font(txt, font_size='12px', bold=False):
     """
     components.html(htmlstr, height=0, width=0)
 
+@st.cache_data
+def get_csv(path):
+    csv = pd.read_csv(path)
+    return csv
+
+def show_forecast():
+    st.session_state.show_forecast = not st.session_state.show_forecast
+
+def show_data():
+    st.session_state.show_data = not st.session_state.show_data
 
 def main():
-
     button_html = """
         <style>
             .stButton>button {
@@ -153,14 +162,6 @@ def display_introduction():
     st.write("""
     本平台构建的糖尿病疾病负担预测模型，依托多个全球权威性的数据源，包括全球疾病负担（GBD）数据库、世界卫生组织数据库、世界银行数据库，以及非传染性疾病风险因素协作组等，覆盖了全球各地的疾病负担模式和发展趋势，使得预测模型具有较强的代表性和可靠性，能够为我国糖尿病疾病负担提供良好的预测与评估。
     """)
-    # st.markdown("""
-    #     <style>
-    #     .streamlit-expanderHeader {
-    #         font-size: 50px;
-    #         font-weight: bold;
-    #     }
-    #     </style>
-    #     """, unsafe_allow_html=True)
     with st.expander("全球疾病负担数据库（Global of Burden Disease，GBD）"):
         st.write("""
         全球疾病负担数据库由美国华盛顿大学健康指标与评估研究所精心打造的，它基于全球众多数据源，运用统一且具备可比性的方法，依据年份、年龄、性别等维度对1990年以来全球204个国家和地区的369种疾病或伤害、87种危险因素的疾病负担数据进行估计和分析。本平台糖尿病疾病负担数据来源于GBD 2021数据库（<a href='https://ghdx.healthdata.org/gbd-2021' target='_blank'>https://ghdx.healthdata.org/gbd-2021</a>），提取1990-2021年全球与中国不同性别、不同年龄组的各项疾病负担指标包括患病率、发病率、伤残调整寿命年（DALY）、伤残减寿年数（YLD）、死亡减寿年数（YLL）。
@@ -206,7 +207,7 @@ def display_trends():
 def display_forecast():
     st.title("未来中国糖尿病疾病负担的预测结果")
 
-    # 选择框：选择指标
+    # 选择指标
     selected_indicator = st.selectbox(
                                     "请选择指标",
                                       ["发病率",
@@ -224,7 +225,7 @@ def display_forecast():
         st.write("衡量从发病到死亡所损失的全部健康寿命年，综合考虑了因早死所致的寿命损失年 (Years of life lost, YLL)和疾病所致伤残引起的健康寿命损失年 (Years lived with disability, YLD)两部分")
     else: pass
 
-    # 选择框：选择模型
+    # 选择模型
     selected_model = st.selectbox("请选择模型", ["ARIMA模型（AutoRegressive Integrated Moving Average Model）",
                                                  "LSTM模型（Long Short Term Memory）",
                                                  "ARIMA-LSTM混合模型",
@@ -325,23 +326,11 @@ def display_forecast():
         st.button("显示预测数据", key="display_data_button", on_click=show_data)
         if st.session_state.show_data:
             with st.container():
-                china3_path = 'https://raw.githubusercontent.com/ChimonGu/Disease_Burden_streamlit/main/china3.csv'
-                china3 = get_csv(china3_path)
-                st.dataframe(china3)
-                china3_csv = china3.to_csv(index=False)
-                st.download_button(label='下载数据（.csv）', data=china3_csv, file_name='china3.csv', mime="text/csv")
-
-
-@st.cache_data
-def get_csv(path):
-    china3 = pd.read_csv(path)
-    return china3
-
-def show_forecast():
-    st.session_state.show_forecast = not st.session_state.show_forecast
-
-def show_data():
-    st.session_state.show_data = not st.session_state.show_data
+                result_path = 'https://raw.githubusercontent.com/ChimonGu/Disease_Burden_streamlit/main/result.csv'
+                result = get_csv(result_path)
+                st.dataframe(result)
+                result_csv = result.to_csv(index=False)
+                st.download_button(label='下载数据（.csv）', data=result_csv, file_name='prediction_result.csv', mime="text/csv")
 
 
 if __name__ == "__main__":
