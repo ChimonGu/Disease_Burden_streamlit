@@ -67,23 +67,23 @@ def main():
     with col1:
         if st.button("📖首页", key="home"):
             navigateTo("home")
-        change_font("首页", '23px', bold=True)
+        change_font("📖首页", '23px', bold=True)
     with col2:
         if st.button("⌨️数据来源", key="introduction"):
             navigateTo("introduction")
-        change_font("数据来源", '23px', bold=True)
+        change_font("⌨️数据来源", '23px', bold=True)
     with col3:
         if st.button("📊现状", key="current"):
             navigateTo("current")
-        change_font("现状", '23px', bold=True)
+        change_font("📊现状", '23px', bold=True)
     with col4:
         if st.button("📈趋势", key="trends"):
             navigateTo("trends")
-        change_font("趋势", '23px', bold=True)
+        change_font("📈趋势", '23px', bold=True)
     with col5:
         if st.button("⏩预测", key="forecast"):
             navigateTo("forecast")
-        change_font("预测", '23px', bold=True)
+        change_font("⏩预测", '23px', bold=True)
 
     selected_page = get_page_from_url()
 
