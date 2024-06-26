@@ -53,16 +53,6 @@ def main():
                 background-color: #E7EFFA;
                 color: black;
             }
-            .stButton>button:active {
-                background-color: #E7EFFA;
-                color: black;
-            }
-            .stButton>button:focus {
-                color: black;
-            }
-            .stButton>button:visited {
-                color: black;
-            }
 
     """
 
@@ -206,116 +196,119 @@ def display_trends():
                  caption="1990-2021年中国糖尿病的DALY数与相应的标化率变化趋势（ASIR: age-standardized incident rate; ASMR: age-standardized mortality rate; ASDR: age-standardized DALY rate）")
 
 def display_forecast():
-    st.title("未来中国糖尿病疾病负担的预测结果")
+    try:
+        st.title("未来中国糖尿病疾病负担的预测结果")
 
-    selected_indicator = st.selectbox(
-                                    "请选择指标",
-                                      ["发病率",
-                                     "死亡率",
-                                     "伤残调整寿命年（Disability Adjusted Life Years, DALY）",
-                                     "年龄标化发病率 (age-standardized incident rate, ASIR)",
-                                     "年龄标化死亡率(age-standardized mortality rate, ASMR)",
-                                     "年龄标化DALY率(age-standardized DALY rate, ASDR)"
-                                    ])
-    if selected_indicator == "发病率":
-        st.write("发病率是指某一人群在一年内新发生糖尿病的频率")
-    elif selected_indicator == "死亡率":
-        st.write("死亡率是指某人群在一定期间内（通常以年为单位）死于糖尿病的人数在该人群中所占的比例")
-    elif selected_indicator == "伤残调整寿命年（Disability Adjusted Life Years, DALY）":
-        st.write("衡量从发病到死亡所损失的全部健康寿命年，综合考虑了因早死所致的寿命损失年 (Years of life lost, YLL)和疾病所致伤残引起的健康寿命损失年 (Years lived with disability, YLD)两部分")
-    else: pass
+        selected_indicator = st.selectbox(
+                                        "请选择指标",
+                                          ["发病率",
+                                         "死亡率",
+                                         "伤残调整寿命年（Disability Adjusted Life Years, DALY）",
+                                         "年龄标化发病率 (age-standardized incident rate, ASIR)",
+                                         "年龄标化死亡率(age-standardized mortality rate, ASMR)",
+                                         "年龄标化DALY率(age-standardized DALY rate, ASDR)"
+                                        ])
+        if selected_indicator == "发病率":
+            st.write("发病率是指某一人群在一年内新发生糖尿病的频率")
+        elif selected_indicator == "死亡率":
+            st.write("死亡率是指某人群在一定期间内（通常以年为单位）死于糖尿病的人数在该人群中所占的比例")
+        elif selected_indicator == "伤残调整寿命年（Disability Adjusted Life Years, DALY）":
+            st.write("衡量从发病到死亡所损失的全部健康寿命年，综合考虑了因早死所致的寿命损失年 (Years of life lost, YLL)和疾病所致伤残引起的健康寿命损失年 (Years lived with disability, YLD)两部分")
+        else: pass
 
-    selected_model = st.selectbox("请选择模型", ["ARIMA模型（AutoRegressive Integrated Moving Average Model）",
-                                                 "LSTM模型（Long Short Term Memory）",
-                                                 "ARIMA-LSTM混合模型",
-                                                 "GAMM模型（Generalized Additive Mixed Models, GAMM）"])
+        selected_model = st.selectbox("请选择模型", ["ARIMA模型（AutoRegressive Integrated Moving Average Model）",
+                                                     "LSTM模型（Long Short Term Memory）",
+                                                     "ARIMA-LSTM混合模型",
+                                                     "GAMM模型（Generalized Additive Mixed Models, GAMM）"])
 
-    if selected_model == "GAMM模型（Generalized Additive Mixed Models, GAMM）":
-        st.write("GAMM是混合效应和相加模型的结合，其中混合模型引入了随机效应反映了不同对象之间的异质性，以及同一对象不同观测之间的相关性。GAMM综合了参数、非参数及随机效应的影响")
-        selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
+        if selected_model == "GAMM模型（Generalized Additive Mixed Models, GAMM）":
+            st.write("GAMM是混合效应和相加模型的结合，其中混合模型引入了随机效应反映了不同对象之间的异质性，以及同一对象不同观测之间的相关性。GAMM综合了参数、非参数及随机效应的影响")
+            selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
 
-        selected_obese_trend = st.selectbox("请选择成人超重率（BMI ≥ 25kg/m², %）", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
-                     caption="成人超重率（BMI ≥ 25kg/m², %）发展趋势")
-        with col2:
-            st.write("""
-            <p style='font-size: 15px; line-height: 2.0;'>
-            \n自然发展趋势：危险因素暴露水平维持过去三十年的平均变化速度，持续演进，未显露出明显的减缓或加剧迹象。（下同）
-            <p>
-            """, unsafe_allow_html=True)
-        if selected_obese_trend == "自然发展趋势基础上上升":
-            obese_up_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="obese_up_percentage")
-        elif selected_obese_trend == "自然发展趋势基础上下降":
-            obese_down_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="obese_down_percentage")
+            selected_obese_trend = st.selectbox("请选择成人超重率（BMI ≥ 25kg/m², %）", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
+                         caption="成人超重率（BMI ≥ 25kg/m², %）发展趋势")
+            with col2:
+                st.write("""
+                <p style='font-size: 15px; line-height: 2.0;'>
+                \n自然发展趋势：危险因素暴露水平维持过去三十年的平均变化速度，持续演进，未显露出明显的减缓或加剧迹象。（下同）
+                <p>
+                """, unsafe_allow_html=True)
+            if selected_obese_trend == "自然发展趋势基础上上升":
+                obese_up_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="obese_up_percentage")
+            elif selected_obese_trend == "自然发展趋势基础上下降":
+                obese_down_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="obese_down_percentage")
 
-        selected_sdi_trend = st.selectbox("请选择SDI【社会人口指数（Socio-demographic Index, SDI）综合反应了一个国家/地区发展状况，由25岁以下女性的总体生育率、15岁及以上女性的平均教育水平、人均收入等数据综合评估得出】",
-                                          ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_sdi_trend == "自然发展趋势基础上上升":
-            sdi_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="sdi_up_perccentage")
-        elif selected_sdi_trend == "自然发展趋势基础上下降":
-            sdi_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="sdi_down_percentage")
+            selected_sdi_trend = st.selectbox("请选择SDI【社会人口指数（Socio-demographic Index, SDI）综合反应了一个国家/地区发展状况，由25岁以下女性的总体生育率、15岁及以上女性的平均教育水平、人均收入等数据综合评估得出】",
+                                              ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
+            if selected_sdi_trend == "自然发展趋势基础上上升":
+                sdi_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="sdi_up_perccentage")
+            elif selected_sdi_trend == "自然发展趋势基础上下降":
+                sdi_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="sdi_down_percentage")
 
-        selected_vegan_trend = st.selectbox("请选择人均蔬菜消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_vegan_trend == "自然发展趋势基础上上升":
-            vegan_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="vegan_up_percentage")
-        elif selected_vegan_trend == "自然发展趋势基础上下降":
-            vegan_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="vegan_down_percentage")
+            selected_vegan_trend = st.selectbox("请选择人均蔬菜消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
+            if selected_vegan_trend == "自然发展趋势基础上上升":
+                vegan_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="vegan_up_percentage")
+            elif selected_vegan_trend == "自然发展趋势基础上下降":
+                vegan_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="vegan_down_percentage")
 
-        selected_fruit_trend = st.selectbox("请选择人均水果消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_fruit_trend == "自然发展趋势基础上上升":
-            fruit_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="fruit_up_percentage")
-        elif selected_fruit_trend == "自然发展趋势基础上下降":
-            fruit_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="fruit_down_percentage")
+            selected_fruit_trend = st.selectbox("请选择人均水果消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
+            if selected_fruit_trend == "自然发展趋势基础上上升":
+                fruit_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="fruit_up_percentage")
+            elif selected_fruit_trend == "自然发展趋势基础上下降":
+                fruit_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="fruit_down_percentage")
 
-        selected_meat_trend = st.selectbox("请选择人均红肉消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_meat_trend == "自然发展趋势基础上上升":
-            meat_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="mean_up_percentage")
-        elif selected_meat_trend == "自然发展趋势基础上下降":
-            meat_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="meat_down_percentage")
+            selected_meat_trend = st.selectbox("请选择人均红肉消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
+            if selected_meat_trend == "自然发展趋势基础上上升":
+                meat_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="mean_up_percentage")
+            elif selected_meat_trend == "自然发展趋势基础上下降":
+                meat_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="meat_down_percentage")
 
-    elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
-        st.write("ARIMA是一种基于随机理论的时间序列分析方法，通过整合自回归（AR）、差分（I）和移动平均（MA）三个成分，能够有效捕捉时间序列数据中的线性关系和趋势变化")
-        selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
-    elif selected_model == "LSTM模型（Long Short Term Memory）":
-        st.write("LSTM是一种递归神经网络（RNN）的变体，它在处理长序列数据时，能够有效地解决标准 RNN 的梯度消失问题。相比于普通的神经网络，LSTM 模型引入了三个门控单元，即输入门、遗忘门和输出门，来控制信息的输入、输出和遗忘")
-        selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
-    elif selected_model == "ARIMA-LSTM混合模型":
-        st.write("ARIMA-LSTM是一种结合了ARIMA和LSTM两种时间序列预测方法的技术。该模型利用ARIMA模型提取原始序列数据的线性特征，将ARIMA模型预测值与实际值之间的残差输入LSTM模型进行残差预测提取非线性特征。将线性部分和非线性部分结合起来，得到ARIMA-LSTM混合模型的预测结果")
-        selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
+        elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
+            st.write("ARIMA是一种基于随机理论的时间序列分析方法，通过整合自回归（AR）、差分（I）和移动平均（MA）三个成分，能够有效捕捉时间序列数据中的线性关系和趋势变化")
+            selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
+        elif selected_model == "LSTM模型（Long Short Term Memory）":
+            st.write("LSTM是一种递归神经网络（RNN）的变体，它在处理长序列数据时，能够有效地解决标准 RNN 的梯度消失问题。相比于普通的神经网络，LSTM 模型引入了三个门控单元，即输入门、遗忘门和输出门，来控制信息的输入、输出和遗忘")
+            selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
+        elif selected_model == "ARIMA-LSTM混合模型":
+            st.write("ARIMA-LSTM是一种结合了ARIMA和LSTM两种时间序列预测方法的技术。该模型利用ARIMA模型提取原始序列数据的线性特征，将ARIMA模型预测值与实际值之间的残差输入LSTM模型进行残差预测提取非线性特征。将线性部分和非线性部分结合起来，得到ARIMA-LSTM混合模型的预测结果")
+            selected_year = st.slider("请选择预测终止年份", 2022, 2040, 2022)
 
-    tab1, tab2 = st.tabs(["📈 预测结果可视化", "📅 显示预测数据"])
-    tab1.subheader("预测结果可视化")
-    tab2.subheader("预测数据")
+        tab1, tab2 = st.tabs(["📈 预测结果可视化", "📅 显示预测数据"])
+        tab1.subheader("预测结果可视化")
+        tab2.subheader("预测数据")
 
-    if selected_model == "GAMM模型（Generalized Additive Mixed Models, GAMM）":
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%9A%84SDI%E3%80%81%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8E%E5%8F%91%E7%97%85%E7%8E%87%E9%97%B4%E7%9A%84%E6%9C%89%E6%95%88%E8%87%AA%E7%94%B1%E5%BA%A6.png?raw=true",
-                 caption="基于GAMM模型拟合的SDI、成人超重率与发病率间的有效自由度", _tab=tab1)
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8D%E5%90%8C%E5%8F%91%E5%B1%95%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%852022-2040%E5%B9%B4ASIR%E7%9A%84%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
-                 caption="基于GAMM模型预测成人超重率不同发展场景下中国糖尿病2022-2040年ASIR的发展趋势（ASIR: age-standardized incident rate，年龄标化发病率）", _tab=tab1)
-    elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                 caption="1990-2021年基于ARIMA模型拟合中国糖尿病年龄标化发病率", _tab=tab1)
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                 caption="基于ARIMA模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
-    elif selected_model == "LSTM模型（Long Short Term Memory）":
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                 caption="1990-2021年基于LSTM模型拟合糖尿病年龄标化发病率", _tab=tab1)
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                 caption="基于LSTM模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
-    else:
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                 caption="1990-2021年基于ARIMA-LSTM混合模型合糖尿病年龄标化发病率", _tab=tab1)
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                 caption="基于ARIMA-LSTM混合模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+        if selected_model == "GAMM模型（Generalized Additive Mixed Models, GAMM）":
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%9A%84SDI%E3%80%81%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8E%E5%8F%91%E7%97%85%E7%8E%87%E9%97%B4%E7%9A%84%E6%9C%89%E6%95%88%E8%87%AA%E7%94%B1%E5%BA%A6.png?raw=true",
+                     caption="基于GAMM模型拟合的SDI、成人超重率与发病率间的有效自由度", _tab=tab1)
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8D%E5%90%8C%E5%8F%91%E5%B1%95%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%852022-2040%E5%B9%B4ASIR%E7%9A%84%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
+                     caption="基于GAMM模型预测成人超重率不同发展场景下中国糖尿病2022-2040年ASIR的发展趋势（ASIR: age-standardized incident rate，年龄标化发病率）", _tab=tab1)
+        elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于ARIMA模型拟合中国糖尿病年龄标化发病率", _tab=tab1)
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于ARIMA模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+        elif selected_model == "LSTM模型（Long Short Term Memory）":
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于LSTM模型拟合糖尿病年龄标化发病率", _tab=tab1)
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于LSTM模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+        else:
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于ARIMA-LSTM混合模型合糖尿病年龄标化发病率", _tab=tab1)
+            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于ARIMA-LSTM混合模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
 
-    with tab2.container():
-        result_path = 'https://raw.githubusercontent.com/ChimonGu/Disease_Burden_streamlit/main/result.csv'
-        result = get_csv(result_path)
-        tab2.dataframe(result)
-        result_csv = result.to_csv(index=False)
-        tab2.download_button(label='下载数据（.csv）', data=result_csv, file_name='prediction_result.csv', mime="text/csv")
+        with tab2.container():
+            result_path = 'https://raw.githubusercontent.com/ChimonGu/Disease_Burden_streamlit/main/result.csv'
+            result = get_csv(result_path)
+            tab2.dataframe(result)
+            result_csv = result.to_csv(index=False)
+            tab2.download_button(label='下载数据（.csv）', data=result_csv, file_name='prediction_result.csv', mime="text/csv")
+    except Exception as e:
+        st.error("Oops! An unexpected error occurred.")
 
 
 if __name__ == "__main__":
