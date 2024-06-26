@@ -24,14 +24,6 @@ def get_csv(path):
     csv = pd.read_csv(path)
     return csv
 
-@st.cache_resource
-def load_image(path, caption, _tab=None):
-    if _tab:
-        image = _tab.image(path, caption=caption)
-    else:
-        image = st.image(path, caption=caption)
-    return image
-
 def main():
     button_html = """
         <style>
@@ -174,25 +166,25 @@ def display_introduction():
 def display_current_status():
     st.title("基于GBD数据的2021年中国糖尿病疾病负担状况")
     with st.expander("发病情况"):
-        load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%8F%91%E7%97%85%E6%83%85%E5%86%B5%EF%BC%88A-%E5%8F%91%E7%97%85%E6%95%B0%EF%BC%8CB-%E5%8F%91%E7%97%85%E7%8E%87%EF%BC%89.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%8F%91%E7%97%85%E6%83%85%E5%86%B5%EF%BC%88A-%E5%8F%91%E7%97%85%E6%95%B0%EF%BC%8CB-%E5%8F%91%E7%97%85%E7%8E%87%EF%BC%89.png?raw=true",
                  caption="基于GBD数据库绘制2021年中国按年龄组、性别划分的糖尿病发病情况（A-发病数，B-发病率）")
     with st.expander("死亡情况"):
-        load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E6%AD%BB%E4%BA%A1%E6%83%85%E5%86%B5%EF%BC%88A-%E6%AD%BB%E4%BA%A1%E6%95%B0%EF%BC%8CB-%E6%AD%BB%E4%BA%A1%E7%8E%87.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E6%AD%BB%E4%BA%A1%E6%83%85%E5%86%B5%EF%BC%88A-%E6%AD%BB%E4%BA%A1%E6%95%B0%EF%BC%8CB-%E6%AD%BB%E4%BA%A1%E7%8E%87.png?raw=true",
                  caption="基于GBD数据库绘制2021年中国按年龄组、性别划分的糖尿病死亡情况（A-死亡数，B-死亡率）")
     with st.expander("伤残调整寿命年（DALY）情况"):
-        load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E4%BC%A4%E6%AE%8B%E8%B0%83%E6%95%B4%E5%AF%BF%E5%91%BD%E5%B9%B4%EF%BC%88Disability%20Adjusted%20Life%20Years,%20DALY%EF%BC%89%E6%83%85%E5%86%B5%EF%BC%88A-%20DALY%E6%95%B0%EF%BC%8CB-%20DALY%E7%8E%87%EF%BC%89.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E4%BC%A4%E6%AE%8B%E8%B0%83%E6%95%B4%E5%AF%BF%E5%91%BD%E5%B9%B4%EF%BC%88Disability%20Adjusted%20Life%20Years,%20DALY%EF%BC%89%E6%83%85%E5%86%B5%EF%BC%88A-%20DALY%E6%95%B0%EF%BC%8CB-%20DALY%E7%8E%87%EF%BC%89.png?raw=true",
                  caption="基于GBD数据库绘制2021年中国按年龄组、性别划分的糖尿病伤残调整寿命年（Disability Adjusted Life Years, DALY）情况（A- DALY数，B- DALY率）")
 
 def display_trends():
     st.title("基于GBD数据1990-2021年中国糖尿病疾病负担的趋势")
     with st.expander("发病趋势"):
-        load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84%E5%8F%91%E7%97%85%E4%BE%8B%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84%E5%8F%91%E7%97%85%E4%BE%8B%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
                  caption="1990-2021年中国糖尿病的发病例数与相应的标化率变化趋势（ASIR: age-standardized incident rate; ASMR: age-standardized mortality rate; ASDR: age-standardized DALY rate）")
     with st.expander("死亡趋势"):
-        load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84%E6%AD%BB%E4%BA%A1%E4%BE%8B%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84%E6%AD%BB%E4%BA%A1%E4%BE%8B%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
                  caption="1990-2021年中国糖尿病的死亡例数与相应的标化率变化趋势\n（ASIR: age-standardized incident rate; ASMR: age-standardized mortality rate; ASDR: age-standardized DALY rate）")
     with st.expander("伤残调整寿命年（DALY）趋势"):
-        load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84DALY%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
+        st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84DALY%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
                  caption="1990-2021年中国糖尿病的DALY数与相应的标化率变化趋势（ASIR: age-standardized incident rate; ASMR: age-standardized mortality rate; ASDR: age-standardized DALY rate）")
 
 def display_forecast():
@@ -228,7 +220,7 @@ def display_forecast():
             selected_obese_trend = st.selectbox("请选择成人超重率（BMI ≥ 25kg/m², %）", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                load_image(path=r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
+                st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
                          caption="成人超重率（BMI ≥ 25kg/m², %）发展趋势")
             with col2:
                 st.write("""
@@ -281,25 +273,25 @@ def display_forecast():
         tab2.subheader("预测数据")
 
         if selected_model == "GAMM模型（Generalized Additive Mixed Models, GAMM）":
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%9A%84SDI%E3%80%81%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8E%E5%8F%91%E7%97%85%E7%8E%87%E9%97%B4%E7%9A%84%E6%9C%89%E6%95%88%E8%87%AA%E7%94%B1%E5%BA%A6.png?raw=true",
-                     caption="基于GAMM模型拟合的SDI、成人超重率与发病率间的有效自由度", _tab=tab1)
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8D%E5%90%8C%E5%8F%91%E5%B1%95%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%852022-2040%E5%B9%B4ASIR%E7%9A%84%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
-                     caption="基于GAMM模型预测成人超重率不同发展场景下中国糖尿病2022-2040年ASIR的发展趋势（ASIR: age-standardized incident rate，年龄标化发病率）", _tab=tab1)
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%9A%84SDI%E3%80%81%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8E%E5%8F%91%E7%97%85%E7%8E%87%E9%97%B4%E7%9A%84%E6%9C%89%E6%95%88%E8%87%AA%E7%94%B1%E5%BA%A6.png?raw=true",
+                     caption="基于GAMM模型拟合的SDI、成人超重率与发病率间的有效自由度")
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGAMM%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E6%88%90%E4%BA%BA%E8%B6%85%E9%87%8D%E7%8E%87%E4%B8%8D%E5%90%8C%E5%8F%91%E5%B1%95%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%852022-2040%E5%B9%B4ASIR%E7%9A%84%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF.png?raw=true",
+                     caption="基于GAMM模型预测成人超重率不同发展场景下中国糖尿病2022-2040年ASIR的发展趋势（ASIR: age-standardized incident rate，年龄标化发病率）")
         elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                     caption="1990-2021年基于ARIMA模型拟合中国糖尿病年龄标化发病率", _tab=tab1)
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                     caption="基于ARIMA模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于ARIMA模型拟合中国糖尿病年龄标化发病率")
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于ARIMA模型对未来2022-2040年的糖尿病年龄标化发病率预测")
         elif selected_model == "LSTM模型（Long Short Term Memory）":
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                     caption="1990-2021年基于LSTM模型拟合糖尿病年龄标化发病率", _tab=tab1)
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                     caption="基于LSTM模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于LSTM模型拟合糖尿病年龄标化发病率")
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8ELSTM%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于LSTM模型对未来2022-2040年的糖尿病年龄标化发病率预测")
         else:
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
-                     caption="1990-2021年基于ARIMA-LSTM混合模型合糖尿病年龄标化发病率", _tab=tab1)
-            load_image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
-                     caption="基于ARIMA-LSTM混合模型对未来2022-2040年的糖尿病年龄标化发病率预测", _tab=tab1)
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%90%88%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87.png?raw=true",
+                     caption="1990-2021年基于ARIMA-LSTM混合模型合糖尿病年龄标化发病率")
+            st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EARIMA-LSTM%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%9C%AA%E6%9D%A52022-2040%E5%B9%B4%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E5%B9%B4%E9%BE%84%E6%A0%87%E5%8C%96%E5%8F%91%E7%97%85%E7%8E%87%E9%A2%84%E6%B5%8B.png?raw=true",
+                     caption="基于ARIMA-LSTM混合模型对未来2022-2040年的糖尿病年龄标化发病率预测")
 
         with tab2.container():
             result_path = 'https://raw.githubusercontent.com/ChimonGu/Disease_Burden_streamlit/main/result.csv'
@@ -308,7 +300,7 @@ def display_forecast():
             result_csv = result.to_csv(index=False)
             tab2.download_button(label='下载数据（.csv）', data=result_csv, file_name='prediction_result.csv', mime="text/csv")
     except Exception as e:
-        st.error("Oops! An unexpected error occurred.")
+        st.error("Oops! 发生了未知错误")
 
 
 if __name__ == "__main__":
