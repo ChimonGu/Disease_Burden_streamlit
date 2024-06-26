@@ -25,7 +25,6 @@ def get_csv(path):
     return csv
 
 def main():
-
     button_html = """
         <style>
             .stButton>button {
@@ -86,7 +85,6 @@ def main():
 
     selected_page = get_page_from_url()
 
-    # 根据选择的页面显示相应内容
     if selected_page == "home":
         homepage()
     elif selected_page == "introduction":
@@ -99,13 +97,16 @@ def main():
         display_forecast()
     else:
         homepage()
+        
 def navigateTo(page):
     url = st.experimental_get_query_params()
     url["page"] = page
     st.experimental_set_query_params(**url)
+    
 def get_page_from_url():
     query_params = st.experimental_get_query_params()
     return query_params.get('page', ['home'])[0]
+    
 def homepage():
     st.title("""
             中国糖尿病疾病负担预测平台
@@ -146,6 +147,7 @@ def homepage():
             </div>
         </div>
         """, unsafe_allow_html=True)
+    
 def display_introduction():
     st.title("数据来源基本介绍")
     st.write("""
@@ -170,6 +172,7 @@ def display_introduction():
         非传染性疾病风险因素协作组致力于及时向全球200个国家和地区提供非传染性疾病（NCD）风险因素方面的数据。\n
         NCD-RisC运用先进的统计方法汇总高质量的基于人群的数据，这些统计方法专门用于分析NCD风险因素。\n
         自1957年以来，NCD-RisC目前已从197个国家收集到超过3300项基于人群的调查数据，有近2亿参与者的风险因素水平已被测量。""")
+        
 def display_current_status():
     st.title("基于GBD数据的2021年中国糖尿病疾病负担状况")
     with st.expander("发病情况"):
@@ -181,6 +184,7 @@ def display_current_status():
     with st.expander("伤残调整寿命年（DALY）情况"):
         st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/%E5%9F%BA%E4%BA%8EGBD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%98%E5%88%B62021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%8C%89%E5%B9%B4%E9%BE%84%E7%BB%84%E3%80%81%E6%80%A7%E5%88%AB%E5%88%92%E5%88%86%E7%9A%84%E7%B3%96%E5%B0%BF%E7%97%85%E4%BC%A4%E6%AE%8B%E8%B0%83%E6%95%B4%E5%AF%BF%E5%91%BD%E5%B9%B4%EF%BC%88Disability%20Adjusted%20Life%20Years,%20DALY%EF%BC%89%E6%83%85%E5%86%B5%EF%BC%88A-%20DALY%E6%95%B0%EF%BC%8CB-%20DALY%E7%8E%87%EF%BC%89.png?raw=true",
                  caption="基于GBD数据库绘制2021年中国按年龄组、性别划分的糖尿病伤残调整寿命年（Disability Adjusted Life Years, DALY）情况（A- DALY数，B- DALY率）")
+        
 def display_trends():
     st.title("基于GBD数据1990-2021年中国糖尿病疾病负担的趋势")
     with st.expander("发病趋势"):
@@ -192,6 +196,7 @@ def display_trends():
     with st.expander("伤残调整寿命年（DALY）趋势"):
         st.image(r"https://github.com/ChimonGu/Disease_Burden_streamlit/blob/main/images/1990-2021%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%B3%96%E5%B0%BF%E7%97%85%E7%9A%84DALY%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%8C%96%E7%8E%87%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF.png?raw=true",
                  caption="1990-2021年中国糖尿病的DALY数与相应的标化率变化趋势（ASIR: age-standardized incident rate; ASMR: age-standardized mortality rate; ASDR: age-standardized DALY rate）")
+        
 def display_forecast():
     st.title("未来中国糖尿病疾病负担的预测结果")
 
