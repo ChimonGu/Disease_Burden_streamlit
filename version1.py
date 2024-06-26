@@ -3,7 +3,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 st.set_page_config(layout="wide", page_title="中国糖尿病疾病负担预测平台", page_icon="🧊")
-st.get_option("theme.primaryColor")
 
 def change_font(txt, font_size='12px', bold=False):
     font_weight = 'bold' if bold else 'normal'
@@ -236,39 +235,39 @@ def display_forecast():
             \n自然发展趋势：危险因素暴露水平维持过去三十年的平均变化速度，持续演进，未显露出明显的减缓或加剧迹象。（下同）
             <p>
             """, unsafe_allow_html=True)
-        if selected_obese_trend == "自然趋势基础上上升":
-            obese_percentage = st.slider("请选择上升百分比", 0, 100, 10, key="up_percentage")
-        elif selected_obese_trend == "自然趋势基础上下降":
-            obese_percentage = st.slider("请选择下降百分比", 0, 100, 10, key="down_percentage")
+        if selected_obese_trend == "自然发展趋势基础上上升":
+            obese_up_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="obese_up_percentage")
+        elif selected_obese_trend == "自然发展趋势基础上下降":
+            obese_down_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="obese_down_percentage")
 
         # 选择sdi趋势
         selected_sdi_trend = st.selectbox("请选择SDI【社会人口指数（Socio-demographic Index, SDI）综合反应了一个国家/地区发展状况，由25岁以下女性的总体生育率、15岁及以上女性的平均教育水平、人均收入等数据综合评估得出】",
                                           ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_sdi_trend == "自然趋势基础上上升":
-            sdi_percentage = st.slider("请选择上升百分比", 0, 100, 10)
-        elif selected_sdi_trend == "自然趋势基础上下降":
-            sdi_percentage = st.slider("请选择下降百分比", 0, 100, 10)
+        if selected_sdi_trend == "自然发展趋势基础上上升":
+            sdi_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="sdi_up_perccentage")
+        elif selected_sdi_trend == "自然发展趋势基础上下降":
+            sdi_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="sdi_down_percentage")
 
         # 选择人均蔬菜消费量
         selected_vegan_trend = st.selectbox("请选择人均蔬菜消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_vegan_trend == "自然趋势基础上上升":
-            vegan_percentage = st.slider("请选择上升百分比", 0, 100, 10, key="up_percentage")
-        elif selected_obese_trend == "自然趋势基础上下降":
-            vegan_percentage = st.slider("请选择下降百分比", 0, 100, 10, key="down_percentage")
+        if selected_vegan_trend == "自然发展趋势基础上上升":
+            vegan_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="vegan_up_percentage")
+        elif selected_vegan_trend == "自然发展趋势基础上下降":
+            vegan_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="vegan_down_percentage")
 
         # 选择人均水果消费量
         selected_fruit_trend = st.selectbox("请选择人均水果消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_fruit_trend == "自然趋势基础上上升":
-            fruit_percentage = st.slider("请选择上升百分比", 0, 100, 10, key="up_percentage")
-        elif selected_obese_trend == "自然趋势基础上下降":
-            fruit_percentage = st.slider("请选择下降百分比", 0, 100, 10, key="down_percentage")
+        if selected_fruit_trend == "自然发展趋势基础上上升":
+            fruit_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="fruit_up_percentage")
+        elif selected_fruit_trend == "自然发展趋势基础上下降":
+            fruit_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="fruit_down_percentage")
 
         # 选择人均红肉消费量
         selected_meat_trend = st.selectbox("请选择人均红肉消费量", ["维持2021年不变", "自然发展趋势", "自然发展趋势基础上上升", "自然发展趋势基础上下降"])
-        if selected_meat_trend == "自然趋势基础上上升":
-            meat_percentage = st.slider("请选择上升百分比", 0, 100, 10, key="up_percentage")
-        elif selected_obese_trend == "自然趋势基础上下降":
-            meat_percentage = st.slider("请选择下降百分比", 0, 100, 10, key="down_percentage")
+        if selected_meat_trend == "自然发展趋势基础上上升":
+            meat_percentage = st.slider("请选择上升百分比", 0, 100, 0, key="mean_up_percentage")
+        elif selected_meat_trend == "自然发展趋势基础上下降":
+            meat_percentage = st.slider("请选择下降百分比", 0, 100, 0, key="meat_down_percentage")
 
     elif selected_model == "ARIMA模型（AutoRegressive Integrated Moving Average Model）":
         st.write("ARIMA是一种基于随机理论的时间序列分析方法，通过整合自回归（AR）、差分（I）和移动平均（MA）三个成分，能够有效捕捉时间序列数据中的线性关系和趋势变化")
